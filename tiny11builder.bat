@@ -109,7 +109,7 @@ echo Removing Edge and WebView2
 		reg add "HKLM\zSOFTWARE\Policies\Microsoft\EdgeUpdate" /f /v DoNotUpdateToEdgeWithChromium /d 1 /t reg_dword >nul 2>&1
 echo Removing OneDrive
 		takeown /f %HOMEDRIVE%\scratchdir\Windows\System32\OneDriveSetup.exe >nul
-		icacls %HOMEDRIVE%\scratchdir\Windows\System32\OneDriveSetup.exe /grant *S-1-5-32-544:F /T /C >nul
+		icacls %HOMEDRIVE%\scratchdir\Windows\System32\OneDriveSetup.exe /grant *S-1-5-32-544:F /C >nul
 		del /f /q /s "%HOMEDRIVE%\scratchdir\Windows\System32\OneDriveSetup.exe" >nul
 		reg delete "HKLM\zSOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "OneDriveSetup" /f >nul 2>&1
 echo Removal complete!
