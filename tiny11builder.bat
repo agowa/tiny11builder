@@ -91,6 +91,14 @@ echo Bypassing system requirements (on the system image)
 		reg add "HKLM\zSYSTEM\Setup\LabConfig" /v "BypassTPMCheck" /t REG_DWORD /d "1" /f >nul 2>&1
 		reg add "HKLM\zSYSTEM\Setup\MoSetup" /v "AllowUpgradesWithUnsupportedTPMOrCPU" /t REG_DWORD /d "1" /f >nul 2>&1
 echo Removing Edge and WebView2
+		takeown /R /f "%HOMEDRIVE%\scratchdir\Program Files (x86)\Microsoft\Edge" >nul
+		icacls "%HOMEDRIVE%\scratchdir\Program Files (x86)\Microsoft\Edge" /grant *S-1-5-32-544:F /T /C >nul
+		takeown /R /f "%HOMEDRIVE%\scratchdir\Program Files (x86)\Microsoft\EdgeUpdate" >nul
+		icacls "%HOMEDRIVE%\scratchdir\Program Files (x86)\Microsoft\EdgeUpdate" /grant *S-1-5-32-544:F /T /C >nul
+		takeown /R /f "%HOMEDRIVE%\scratchdir\Program Files (x86)\Microsoft\EdgeWebView" >nul
+		icacls "%HOMEDRIVE%\scratchdir\Program Files (x86)\Microsoft\EdgeWebView" /grant *S-1-5-32-544:F /T /C >nul
+		takeown /R /f "%HOMEDRIVE%\scratchdir\Program Files (x86)\Microsoft\EdgeCore" >nul
+		icacls "%HOMEDRIVE%\scratchdir\Program Files (x86)\Microsoft\EdgeCore" /grant *S-1-5-32-544:F /T /C >nul
 		rd /s /q "%HOMEDRIVE%\scratchdir\Program Files (x86)\Microsoft\Edge" >nul
 		rd /s /q "%HOMEDRIVE%\scratchdir\Program Files (x86)\Microsoft\EdgeUpdate" >nul
 		rd /s /q "%HOMEDRIVE%\scratchdir\Program Files (x86)\Microsoft\EdgeWebView" >nul
