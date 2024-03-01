@@ -34,12 +34,28 @@ echo Copy complete!
 sleep 2
 cls
 echo Getting image information:
-dism /Get-WimInfo /wimfile:%tiny11%\sources\install.wim
 set index=
-set /p index=Please enter the image index: 
-set "index=%index%"
-echo Mounting Windows image. This may take a while.
-echo.
+if exist "%DriveLetter%\sources\install.wim" (
+	dism /Get-WimInfo /wimfile:%tiny11%\sources\install.wim
+	set /p index=Please enter the image index: 
+	set "index=%index%"
+	echo Mounting Windows image. This may take a while.
+	echo.
+) else (
+	REM TODO: Also check for split SWM files
+	if not exist "%DriveLetter%\sources\install.esd" (
+		echo Failed neither install.wim nor install.esd found.
+		goto :eof
+	)
+	dism /Get-WimInfo /wimfile:%tiny11%\sources\install.esd
+	set /p index=Please enter the image index: 
+	set "index=%index%"
+	echo Mounting Windows image. This may take a while.
+	echo.
+	Dism /Export-image /SourceImageFile:%tiny11%\sources\install.esd /SourceIndex:%index% /DestinationImageFile:%tiny11%\sources\install.wim /Compress:max /CheckIntegrity
+	del d:\tiny11\sources\install.esd
+	set "index=1"
+)
 md %HOMEDRIVE%\scratchdir
 dism /mount-image /imagefile:%tiny11%\sources\install.wim /index:%index% /mountdir:%HOMEDRIVE%\scratchdir
 cls
