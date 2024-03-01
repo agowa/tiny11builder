@@ -22,10 +22,12 @@ if not exist "%driveletter%\sources\boot.wim" (
 )
 
 if not exist "%driveletter%\sources\install.wim" (
-	echo. Can't find Windows OS Installation files in the specified Drive Letter...
-	echo.
-	echo. Please enter the correct DVD Drive Letter...
-	goto :stop
+	if not exist "%driveletter%\sources\install.esd" (
+		echo. Can't find Windows OS Installation files in the specified Drive Letter...
+		echo.
+		echo. Please enter the correct DVD Drive Letter...
+		goto :stop
+	)
 )
 md %tiny11%
 echo Copying Windows image...
